@@ -8,12 +8,9 @@ import {
   type CardPage,
   type CardQuery,
 } from "@/lib/ygoprodeck";
-import { HoloCard, HoloCardSkeleton } from "@/components/holo-card";
+import { GRID, HoloCard, HoloCardSkeleton } from "@/components/holo-card";
 import { CardDetailSheet } from "@/components/card-detail-sheet";
 import { AlertIcon, SparkIcon, SpinnerIcon } from "@/components/icons";
-
-const GRID =
-  "grid grid-cols-[repeat(auto-fill,minmax(clamp(8.5rem,22vw,11.5rem),1fr))] gap-x-4 gap-y-8";
 
 export function Gallery({
   initial,

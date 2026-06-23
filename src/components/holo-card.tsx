@@ -4,6 +4,9 @@ import { useRef, type PointerEvent } from "react";
 import Image from "next/image";
 import { attributeMeta, frameMeta, type Card } from "@/lib/ygoprodeck";
 
+export const GRID =
+  "grid grid-cols-[repeat(auto-fill,minmax(clamp(8.5rem,22vw,11.5rem),1fr))] gap-x-4 gap-y-8";
+
 function accessibleName(card: Card): string {
   const attr = attributeMeta(card.attribute);
   const parts = [card.name, card.humanReadableCardType];
@@ -22,11 +25,15 @@ export function HoloCard({
   index = 0,
   onSelect,
   animate = true,
+  rank,
+  metric,
 }: {
   card: Card;
   index?: number;
   onSelect: (card: Card) => void;
   animate?: boolean;
+  rank?: number;
+  metric?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const art = card.card_images[0];
@@ -67,7 +74,10 @@ export function HoloCard({
           : undefined
       }
     >
-      <span className="sr-only">View {card.name}</span>
+      <span className="sr-only">
+        View {card.name}
+        {rank !== undefined && `, Rank ${rank}${metric ? `, ${metric}` : ''}`}
+      </span>
       <div
         ref={ref}
         onPointerMove={onMove}
@@ -90,6 +100,23 @@ export function HoloCard({
 
         <span aria-hidden className="holo-foil pointer-events-none absolute inset-0" />
         <span aria-hidden className="holo-glare pointer-events-none absolute inset-0" />
+
+        {rank !== undefined && (
+          <span
+            aria-hidden
+            className="absolute left-2 top-2 rounded-[4px] bg-black/65 px-1.5 py-0.5 font-display text-[0.72rem] font-bold tracking-wide text-amber backdrop-blur-sm"
+          >
+            #{rank}
+          </span>
+        )}
+        {metric && (
+          <span
+            aria-hidden
+            className="absolute right-2 top-2 rounded-[4px] bg-black/65 px-1.5 py-0.5 font-mono text-[0.56rem] uppercase tracking-[0.1em] text-ink/90 backdrop-blur-sm"
+          >
+            {metric}
+          </span>
+        )}
 
         {/* Caption reveals on hover/focus; the art leads by default. */}
         <span
