@@ -85,6 +85,13 @@ export interface CardImage {
   image_url_cropped: string;
 }
 
+export interface MiscInfo {
+  views?: number;
+  viewsweek?: number;
+  upvotes?: number;
+  downvotes?: number;
+}
+
 export interface Card {
   id: number;
   name: string;
@@ -104,6 +111,7 @@ export interface Card {
   linkmarkers?: string[];
   scale?: number;
   card_images: CardImage[];
+  misc_info?: MiscInfo[];
 }
 
 export interface CardQuery {
