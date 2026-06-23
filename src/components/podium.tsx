@@ -26,9 +26,13 @@ export function Podium({
       {top.map((rc, i) => (
         <li
           key={rc.card.id}
-          className={`${VISUAL_ORDER[i]} ${SELF_ALIGN[i]} ${
-            i === 0 ? "w-[42%] max-w-[18rem]" : "w-[29%] max-w-[12rem]"
-          }`}
+          className={[
+            VISUAL_ORDER[i],
+            SELF_ALIGN[i],
+            i === 0 ? "w-[42%] max-w-[18rem]" : "w-[29%] max-w-[12rem]",
+          ]
+            .filter(Boolean)
+            .join(" ")}
         >
           <HoloCard
             card={rc.card}
