@@ -1,0 +1,333 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   Arcana — "neo-mirai" dark edition.
+   A cinematic neo-Japanese stage: warm ink-black surfaces, amber/ember light,
+   condensed techno display type, mono technical marks. Card art is the hero;
+   the chrome is a lit exhibit around it. OKLCH throughout.
+   ============================================================================ */
+
+:root {
+  color-scheme: dark;
+
+  /* Architecture — warm ink black; the warmth lives in light, not the surface. */
+  --bg: oklch(0.165 0.01 66);
+  --bg-deep: oklch(0.125 0.01 66);
+  --surface: oklch(0.205 0.012 66);
+  --surface-2: oklch(0.25 0.013 66);
+  --surface-3: oklch(0.3 0.014 66);
+  --hairline: oklch(0.85 0.04 80 / 0.12);
+  --hairline-strong: oklch(0.85 0.05 80 / 0.22);
+
+  /* Ink — warm bone whites; every tier clears WCAG AA on bg and surface. */
+  --ink: oklch(0.96 0.012 82);
+  --muted: oklch(0.8 0.02 82);
+  --faint: oklch(0.72 0.025 78);
+
+  /* Amber — the rising-sun primary (focus, selection, primary action). */
+  --amber: oklch(0.82 0.15 78);
+  --amber-bright: oklch(0.88 0.145 82);
+  --amber-ink: oklch(0.2 0.04 70); /* dark text that rides on an amber fill */
+  --amber-glow: oklch(0.82 0.15 78 / 0.34);
+  --amber-veil: oklch(0.82 0.15 78 / 0.12);
+
+  /* Ember — burnt-orange / maple accent. */
+  --ember: oklch(0.64 0.19 42);
+  --ember-bright: oklch(0.7 0.2 44);
+
+  /* Yu-Gi-Oh! attribute coding — always paired with a text label in the UI. */
+  --attr-dark: oklch(0.64 0.16 305);
+  --attr-light: oklch(0.86 0.12 96);
+  --attr-fire: oklch(0.66 0.21 33);
+  --attr-water: oklch(0.68 0.14 240);
+  --attr-earth: oklch(0.68 0.08 75);
+  --attr-wind: oklch(0.76 0.15 158);
+  --attr-divine: oklch(0.82 0.16 80);
+
+  /* Card-frame coding for type chips (label always present). */
+  --frame-normal: oklch(0.8 0.1 80);
+  --frame-effect: oklch(0.72 0.17 52);
+  --frame-ritual: oklch(0.68 0.15 245);
+  --frame-fusion: oklch(0.64 0.17 320);
+  --frame-synchro: oklch(0.92 0.02 90);
+  --frame-xyz: oklch(0.66 0.05 280);
+  --frame-link: oklch(0.68 0.14 220);
+  --frame-spell: oklch(0.72 0.14 175);
+  --frame-trap: oklch(0.68 0.17 350);
+
+  /* Semantic z-index scale (native <dialog> top-layer sits above all of this). */
+  --z-sticky: 100;
+  --z-overlay: 200;
+
+  --shadow-tile: 0 1px 2px oklch(0 0 0 / 0.45);
+  --shadow-lift: 0 26px 50px -16px oklch(0 0 0 / 0.75);
+  --shadow-sheet: -24px 0 70px -20px oklch(0 0 0 / 0.85);
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-deep: var(--bg-deep);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-amber: var(--amber);
+  --color-amber-bright: var(--amber-bright);
+  --color-amber-ink: var(--amber-ink);
+  --color-ember: var(--ember);
+  --color-ember-bright: var(--ember-bright);
+
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), "Chakra Petch", ui-sans-serif, sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-mono), ui-monospace, "SF Mono", monospace;
+}
+
+* {
+  border-color: var(--hairline);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--amber-glow);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Film grain — a faint static texture over the whole stage for atmosphere. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+}
+
+/* Mono technical label. */
+.tech {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Vertical Japanese accent (tategaki). */
+.vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 0.3em;
+}
+
+/* ---- Motion ---------------------------------------------------------------- */
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Masked line rise — for hero display lines. */
+@keyframes line-rise {
+  from {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.18) translate3d(-1.5%, -2%, 0);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Skeleton tiles get a moving sheen; resting state is a static surface. */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(1 0 0 / 0.06),
+    transparent
+  );
+  animation: shimmer 1.4s var(--ease-out-quint) infinite;
+}
+
+/* Reveal enhances an already-visible default. */
+.reveal {
+  animation: reveal 0.5s var(--ease-out-quint) both;
+}
+
+.kenburns {
+  animation: ken-burns 22s ease-in-out infinite alternate;
+}
+
+.spin-slow {
+  animation: spin-slow 38s linear infinite;
+}
+
+.float-soft {
+  animation: float-soft 7s ease-in-out infinite;
+}
+
+/* Hero display line: each line lives in an overflow-clip mask and rises in. */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.04em;
+}
+.line-mask > span {
+  display: block;
+  animation: line-rise 0.9s var(--ease-out-quint) both;
+}
+
+/* Scroll-driven section reveal where supported; harmless time fallback elsewhere.
+   Resting state (no animation) is fully visible. */
+@supports (animation-timeline: view()) {
+  .on-scroll {
+    opacity: 0;
+    animation: reveal 0.8s var(--ease-out-quint) both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 26%;
+  }
+}
+
+/* ---- Holographic card ------------------------------------------------------ */
+
+.holo {
+  /* pointer position + tilt set from JS as inline CSS vars */
+  --px: 50%;
+  --py: 50%;
+  --rx: 0deg;
+  --ry: 0deg;
+  --active: 0;
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.5s var(--ease-out-quint);
+  will-change: transform;
+}
+.holo-glare {
+  background: radial-gradient(
+    120px 120px at var(--px) var(--py),
+    oklch(1 0 0 / 0.5),
+    transparent 60%
+  );
+  opacity: var(--active);
+  transition: opacity 0.4s var(--ease-out-quint);
+  mix-blend-mode: soft-light;
+}
+.holo-foil {
+  background:
+    repeating-linear-gradient(
+      115deg,
+      oklch(0.7 0.2 20 / 0.5) 0%,
+      oklch(0.8 0.18 90 / 0.5) 12%,
+      oklch(0.7 0.2 160 / 0.5) 24%,
+      oklch(0.7 0.22 280 / 0.5) 36%,
+      oklch(0.7 0.2 20 / 0.5) 48%
+    );
+  background-size: 220% 220%;
+  background-position: var(--px) var(--py);
+  opacity: calc(var(--active) * 0.5);
+  transition: opacity 0.45s var(--ease-out-quint);
+  mix-blend-mode: color-dodge;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .skeleton::after,
+  .kenburns,
+  .spin-slow,
+  .float-soft {
+    animation: none !important;
+  }
+  .holo {
+    transform: none !important;
+  }
+  @supports (animation-timeline: view()) {
+    .on-scroll {
+      opacity: 1;
+      animation: none;
+    }
+  }
+}

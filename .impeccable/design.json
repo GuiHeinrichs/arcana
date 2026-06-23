@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-22T00:00:00Z",
+  "title": "Design System: Yu-Gi-Oh! Deck Builder & Collection",
+  "extensions": {
+    "colorMeta": {
+      "void": { "role": "neutral", "displayName": "Void", "canonical": "oklch(0.11 0 0)", "tonalRamp": ["oklch(0.08 0 0)", "oklch(0.11 0 0)", "oklch(0.16 0 0)", "oklch(0.21 0 0)", "oklch(0.28 0 0)", "oklch(0.45 0 0)", "oklch(0.60 0 0)", "oklch(0.72 0 0)"] },
+      "surface": { "role": "neutral", "displayName": "Surface", "canonical": "oklch(0.16 0 0)" },
+      "surface-raised": { "role": "neutral", "displayName": "Surface Raised", "canonical": "oklch(0.21 0 0)" },
+      "border": { "role": "neutral", "displayName": "Border", "canonical": "oklch(0.28 0 0)" },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "oklch(0.97 0 0)" },
+      "ink-muted": { "role": "neutral", "displayName": "Ink Muted", "canonical": "oklch(0.72 0 0)" },
+      "ink-faint": { "role": "neutral", "displayName": "Ink Faint", "canonical": "oklch(0.60 0 0)" },
+      "primary": { "role": "primary", "displayName": "Calibration Cobalt", "canonical": "oklch(0.52 0.17 262)", "tonalRamp": ["oklch(0.20 0.10 262)", "oklch(0.30 0.13 262)", "oklch(0.40 0.15 262)", "oklch(0.52 0.17 262)", "oklch(0.62 0.17 262)", "oklch(0.72 0.14 262)", "oklch(0.82 0.10 262)", "oklch(0.92 0.05 262)"] },
+      "primary-bright": { "role": "primary", "displayName": "Brighter Cobalt", "canonical": "oklch(0.62 0.17 262)" },
+      "primary-deep": { "role": "primary", "displayName": "Deep Cobalt", "canonical": "oklch(0.44 0.15 262)" },
+      "primary-soft": { "role": "primary", "displayName": "Cobalt Wash", "canonical": "oklch(0.30 0.08 262)" },
+      "starlight": { "role": "secondary", "displayName": "Starlight", "canonical": "oklch(0.82 0.10 230)", "tonalRamp": ["oklch(0.40 0.08 230)", "oklch(0.52 0.10 230)", "oklch(0.64 0.11 230)", "oklch(0.74 0.11 230)", "oklch(0.82 0.10 230)", "oklch(0.88 0.07 230)", "oklch(0.93 0.04 230)", "oklch(0.97 0.02 230)"] },
+      "success": { "role": "tertiary", "displayName": "Success Green", "canonical": "oklch(0.72 0.15 150)" },
+      "warning": { "role": "tertiary", "displayName": "Warning Amber", "canonical": "oklch(0.80 0.14 85)" },
+      "danger": { "role": "tertiary", "displayName": "Danger Red", "canonical": "oklch(0.62 0.20 25)" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Card-name spotlight and page-title moments. Fixed rem, not fluid." },
+      "headline": { "displayName": "Headline", "purpose": "Section and panel headers." },
+      "title": { "displayName": "Title", "purpose": "Card titles in tiles, dialog titles." },
+      "body": { "displayName": "Body", "purpose": "Descriptions and prose; cap at 65-75ch." },
+      "label": { "displayName": "Label", "purpose": "UI labels, chips, metadata. Sentence case." },
+      "data": { "displayName": "Data (Mono)", "purpose": "Game data only: ATK/DEF, levels, passcodes, counts." }
+    },
+    "shadows": [
+      { "name": "focus-glow", "value": "0 0 0 2px oklch(0.11 0 0), 0 0 0 4px oklch(0.62 0.17 262)", "purpose": "Standard :focus-visible ring: a void gap then a cobalt ring." },
+      { "name": "lift-hover", "value": "0 8px 30px oklch(0 0 0 / 0.5)", "purpose": "Soft diffuse lift under a card tile on hover; never for resting elevation." }
+    ],
+    "motion": [
+      { "name": "ease-out-quint", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default exponential ease-out for state transitions and card hover." },
+      { "name": "duration-state", "value": "180ms", "purpose": "Default transition duration (range 150-250ms). No page-load choreography." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single cobalt call-to-action: add to deck, save, confirm.",
+      "html": "<button class=\"ds-btn-primary\">Add to deck</button>",
+      "css": ".ds-btn-primary{background:oklch(0.52 0.17 262);color:oklch(0.97 0 0);font:500 0.8125rem/1.4 'Geist Sans',ui-sans-serif,system-ui,sans-serif;letter-spacing:0.01em;padding:0.625rem 1rem;border:none;border-radius:6px;cursor:pointer;transition:background .18s cubic-bezier(.22,1,.36,1),box-shadow .18s}.ds-btn-primary:hover{background:oklch(0.62 0.17 262)}.ds-btn-primary:active{background:oklch(0.44 0.15 262)}.ds-btn-primary:focus-visible{outline:none;box-shadow:0 0 0 2px oklch(0.11 0 0),0 0 0 4px oklch(0.62 0.17 262)}.ds-btn-primary:disabled{opacity:.5;cursor:not-allowed}@media (prefers-reduced-motion:reduce){.ds-btn-primary{transition:box-shadow .18s}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Neutral action on a surface: cancel, back, less-prominent choices.",
+      "html": "<button class=\"ds-btn-secondary\">Cancel</button>",
+      "css": ".ds-btn-secondary{background:oklch(0.16 0 0);color:oklch(0.97 0 0);font:500 0.8125rem/1.4 'Geist Sans',ui-sans-serif,system-ui,sans-serif;letter-spacing:0.01em;padding:0.625rem 1rem;border:1px solid oklch(0.28 0 0);border-radius:6px;cursor:pointer;transition:background .18s,border-color .18s}.ds-btn-secondary:hover{background:oklch(0.21 0 0);border-color:oklch(0.40 0 0)}.ds-btn-secondary:focus-visible{outline:none;box-shadow:0 0 0 2px oklch(0.11 0 0),0 0 0 4px oklch(0.62 0.17 262)}"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "The search-forward entry point to card discovery.",
+      "html": "<div class=\"ds-search\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"></circle><path d=\"m21 21-4.3-4.3\"></path></svg><input class=\"ds-search-input\" type=\"search\" placeholder=\"Search 13,000+ cards…\"></div>",
+      "css": ".ds-search{display:flex;align-items:center;gap:8px;background:oklch(0.16 0 0);border:1px solid oklch(0.28 0 0);border-radius:6px;padding:0.5rem 0.75rem;min-width:280px}.ds-search svg{width:16px;height:16px;color:oklch(0.72 0 0);flex:none}.ds-search-input{flex:1;background:transparent;border:none;outline:none;color:oklch(0.97 0 0);font:400 1rem/1.55 'Geist Sans',ui-sans-serif,system-ui,sans-serif}.ds-search-input::placeholder{color:oklch(0.72 0 0)}.ds-search:focus-within{border-color:oklch(0.52 0.17 262);box-shadow:0 0 0 2px oklch(0.11 0 0),0 0 0 4px oklch(0.62 0.17 262)}"
+    },
+    {
+      "name": "Attribute Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "A filter pill that pairs color with an icon + label, so selection never relies on color alone.",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"></path></svg>DARK</button>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;background:oklch(0.16 0 0);color:oklch(0.72 0 0);font:500 0.8125rem/1.4 'Geist Sans',ui-sans-serif,system-ui,sans-serif;letter-spacing:0.01em;padding:0.25rem 0.625rem;border:1px solid transparent;border-radius:9999px;cursor:pointer;transition:background .15s,color .15s}.ds-chip svg{width:14px;height:14px;flex:none}.ds-chip:hover{background:oklch(0.21 0 0);color:oklch(0.97 0 0)}.ds-chip[aria-pressed=\"true\"]{background:oklch(0.30 0.08 262);color:oklch(0.97 0 0)}.ds-chip:focus-visible{outline:none;box-shadow:0 0 0 2px oklch(0.11 0 0),0 0 0 4px oklch(0.62 0.17 262)}"
+    },
+    {
+      "name": "Card Tile",
+      "kind": "card",
+      "refersTo": "card-tile",
+      "description": "Signature component. Art-forward tile; chrome recedes, the card image leads. Image placeholder shown (do not hotlink ygoprodeck images; serve cached art).",
+      "html": "<article class=\"ds-card-tile\" tabindex=\"0\"><div class=\"ds-card-art\"></div><div class=\"ds-card-meta\"><h3 class=\"ds-card-name\">Dark Magician</h3><div class=\"ds-card-stats\"><span class=\"ds-stat\">ATK 2500</span><span class=\"ds-stat\">DEF 2100</span></div></div></article>",
+      "css": ".ds-card-tile{display:flex;flex-direction:column;width:200px;background:oklch(0.16 0 0);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s}.ds-card-art{aspect-ratio:686/1000;background:linear-gradient(160deg,oklch(0.24 0.03 262),oklch(0.13 0 0))}.ds-card-meta{padding:12px}.ds-card-name{margin:0 0 6px;color:oklch(0.97 0 0);font:600 1.125rem/1.3 'Geist Sans',ui-sans-serif,system-ui,sans-serif}.ds-card-stats{display:flex;gap:12px}.ds-stat{color:oklch(0.72 0 0);font:500 0.875rem/1.4 'Geist Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}.ds-card-tile:hover{transform:scale(1.02);box-shadow:0 8px 30px oklch(0 0 0/.5),inset 0 1px 0 oklch(0.82 0.10 230/.5)}.ds-card-tile:focus-visible{outline:none;box-shadow:0 0 0 2px oklch(0.11 0 0),0 0 0 4px oklch(0.62 0.17 262)}@media (prefers-reduced-motion:reduce){.ds-card-tile{transition:box-shadow .18s}.ds-card-tile:hover{transform:none}}"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "button-ghost",
+      "description": "Quiet top-bar navigation; current route marked with ink + a cobalt underline.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" aria-current=\"page\" href=\"#\">Browse</a><a class=\"ds-nav-link\" href=\"#\">Decks</a><a class=\"ds-nav-link\" href=\"#\">Collection</a></nav>",
+      "css": ".ds-nav{display:flex;gap:20px;align-items:center}.ds-nav-link{position:relative;color:oklch(0.72 0 0);font:500 0.8125rem/1.4 'Geist Sans',ui-sans-serif,system-ui,sans-serif;letter-spacing:0.01em;text-decoration:none;padding:6px 2px;transition:color .15s}.ds-nav-link:hover{color:oklch(0.97 0 0)}.ds-nav-link[aria-current=\"page\"]{color:oklch(0.97 0 0)}.ds-nav-link[aria-current=\"page\"]::after{content:'';position:absolute;left:0;right:0;bottom:-4px;height:2px;background:oklch(0.52 0.17 262);border-radius:2px}.ds-nav-link:focus-visible{outline:none;border-radius:4px;box-shadow:0 0 0 2px oklch(0.11 0 0),0 0 0 4px oklch(0.62 0.17 262)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Midnight Observatory",
+    "overview": "A dark, quiet room where each card is lit like an exhibit. The interface is the gallery wall and the track lighting, never the painting. Surfaces are a true, untinted near-black so the warm, saturated card art is the only real color in the room; the cobalt-indigo brand color glows in like a calibration light, used sparingly to mark what's live, selected, or actionable. The mood borrows from museum/gallery sites and premium dark product UI (Linear, Vercel, MUBI): confident, precise, unhurried. This system explicitly rejects the generic SaaS dashboard, the database-dump fan-site look, and the obvious category reflexes (all-gold card-trim chrome, mystical-purple everything).",
+    "keyCharacteristics": [
+      "True untinted near-black surfaces (oklch(0.11 0 0)); the art carries color.",
+      "A single cobalt-indigo brand voice, used on ≤10% of any screen.",
+      "Depth from tonal layering + a faint colored glow, not heavy drop shadows.",
+      "One refined sans (Geist) across the whole UI; mono reserved for game data.",
+      "Responsive, state-conveying motion (150-250ms); no page-load choreography.",
+      "Information is never carried by color alone (YGO attribute/type coding)."
+    ],
+    "rules": [
+      { "name": "The One Voice Rule", "body": "Calibration Cobalt appears on ≤10% of any given screen. Its rarity is what makes selected and primary legible at a glance.", "section": "colors" },
+      { "name": "The Untinted Void Rule", "body": "The background is pure neutral (chroma 0). Warmth and color come from the card art, never from a tinted surface.", "section": "colors" },
+      { "name": "The No-Eyebrow Rule", "body": "No tiny uppercase tracked kicker above sections. Labels are sentence case; hierarchy comes from size and weight.", "section": "typography" },
+      { "name": "The Mono-Is-For-Machines Rule", "body": "Geist Mono is reserved for game data and identifiers. It never sets prose, headings, or button labels.", "section": "typography" },
+      { "name": "The Glow-Not-Drop Rule", "body": "Convey depth with tonal layering and a faint colored glow. Drop shadows darker than oklch(0 0 0 / 0.5) or used for resting elevation are prohibited.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the background a true untinted near-black (oklch(0.11 0 0)); let the card art be the color.",
+      "Do keep Calibration Cobalt to ≤10% of any screen (the One Voice Rule).",
+      "Do convey depth with tonal layering + a faint glow (the Glow-Not-Drop Rule).",
+      "Do pair every attribute/type/state color with an icon, label, or text - color is never the only signal.",
+      "Do use Geist Mono only for game data (ATK/DEF, levels, passcodes), Geist Sans for everything else.",
+      "Do give every interactive component default / hover / focus-visible / active / disabled / loading states, with a prefers-reduced-motion fallback.",
+      "Do use skeletons for loading card grids and teaching empty states, not mid-content spinners."
+    ],
+    "donts": [
+      "Don't build the generic SaaS dashboard: no cream/navy template, no hero-metric stat cards, no walls of identical icon+heading+text cards.",
+      "Don't add tracked-uppercase eyebrows or 01 / 02 / 03 numbered markers above sections.",
+      "Don't use gradient text (background-clip: text), side-stripe border-left/right accents, or decorative glassmorphism.",
+      "Don't tint the background warm or cool for mood; warmth lives in the art and accents.",
+      "Don't use drop shadows for resting elevation or anything darker than oklch(0 0 0 / 0.5).",
+      "Don't set prose, headings, or button labels in mono; don't set UI labels in a display face.",
+      "Don't rely on attribute/type color alone to convey meaning anywhere."
+    ]
+  }
+}
