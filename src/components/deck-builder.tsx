@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { CardHoverCard, cardSummary } from "@/components/card-hover-card";
 import {
   addCard,
   defaultZone,
@@ -251,33 +252,61 @@ function Tile({
   onClick: () => void;
 }) {
   const art = card.card_images[0];
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const [anchor, setAnchor] = useState<DOMRect | null>(null);
+  const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function open() {
+    if (btnRef.current) setAnchor(btnRef.current.getBoundingClientRect());
+  }
+  function close() {
+    if (openTimer.current) clearTimeout(openTimer.current);
+    setAnchor(null);
+  }
+  // Mouse opens after a short dwell to avoid flicker while scanning; keyboard
+  // focus opens immediately.
+  function onEnter() {
+    openTimer.current = setTimeout(open, 120);
+  }
+
+  useEffect(() => () => {
+    if (openTimer.current) clearTimeout(openTimer.current);
+  }, []);
+
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      title={card.name}
-      aria-label={`${action}: ${card.name}`}
-      className="group relative block aspect-[59/86] w-full overflow-hidden rounded-[5px] bg-surface ring-1 ring-hairline transition-transform hover:-translate-y-0.5 hover:ring-amber focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:translate-y-0 disabled:hover:ring-hairline"
-    >
-      {art ? (
-        <Image
-          src={art.image_url_small}
-          alt={card.name}
-          fill
-          sizes="80px"
-          className="object-cover"
-        />
-      ) : (
-        <span className="flex h-full items-center justify-center p-1 text-center text-[0.5rem] text-muted">
-          {card.name}
-        </span>
-      )}
-      {count && count > 1 ? (
-        <span className="absolute bottom-0 right-0 rounded-tl-[5px] bg-black/80 px-1 font-mono text-[0.6rem] font-bold tabular-nums text-amber">
-          ×{count}
-        </span>
-      ) : null}
-    </button>
+    <>
+      <button
+        ref={btnRef}
+        type="button"
+        onClick={onClick}
+        disabled={disabled}
+        onMouseEnter={onEnter}
+        onMouseLeave={close}
+        onFocus={open}
+        onBlur={close}
+        aria-label={`${action}: ${card.name}. ${cardSummary(card)}`}
+        className="group relative block aspect-[59/86] w-full overflow-hidden rounded-[5px] bg-surface ring-1 ring-hairline transition-transform hover:-translate-y-0.5 hover:ring-amber focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:translate-y-0 disabled:hover:ring-hairline"
+      >
+        {art ? (
+          <Image
+            src={art.image_url_small}
+            alt={card.name}
+            fill
+            sizes="80px"
+            className="object-cover"
+          />
+        ) : (
+          <span className="flex h-full items-center justify-center p-1 text-center text-[0.5rem] text-muted">
+            {card.name}
+          </span>
+        )}
+        {count && count > 1 ? (
+          <span className="absolute bottom-0 right-0 rounded-tl-[5px] bg-black/80 px-1 font-mono text-[0.6rem] font-bold tabular-nums text-amber">
+            ×{count}
+          </span>
+        ) : null}
+      </button>
+      {anchor && <CardHoverCard card={card} anchor={anchor} />}
+    </>
   );
 }
