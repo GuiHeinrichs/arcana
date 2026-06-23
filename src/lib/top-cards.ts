@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import type { Card } from '@/lib/ygoprodeck';
 
 export type TopLens = 'week' | 'views' | 'likes' | 'staples';
@@ -77,4 +78,45 @@ export function buildRankings(cards: Card[]): TopRankings {
 
 export function buildStaples(cards: Card[]): RankedCard[] {
   return rankBy(cards, 'views', cards.length);
+}
+
+const RANKINGS_URL = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes';
+const STAPLES_URL =
+  'https://db.ygoprodeck.com/api/v7/cardinfo.php?staple=yes&misc=yes';
+
+const EMPTY_RANKINGS: TopRankings = { week: [], views: [], likes: [] };
+
+/**
+ * Rankings come from the full card set (~23MB) which is too large for Next's
+ * fetch cache, so the raw fetch is `no-store` and we cache only the small
+ * derived result via unstable_cache (revalidated daily). On any failure we
+ * return empty lenses — the page still renders Staples (fetched separately).
+ */
+export const getTopRankings = unstable_cache(
+  async (): Promise<TopRankings> => {
+    try {
+      const res = await fetch(RANKINGS_URL, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`YGOPRODeck responded ${res.status}`);
+      const json = (await res.json()) as { data?: Card[] };
+      return json.data ? buildRankings(json.data) : EMPTY_RANKINGS;
+    } catch {
+      return EMPTY_RANKINGS;
+    }
+  },
+  ['ygo-top-rankings'],
+  { revalidate: 60 * 60 * 24, tags: ['ygo-top'] },
+);
+
+/** Staples are a small curated set (~64), cached via the normal fetch cache. */
+export async function getStaples(): Promise<RankedCard[]> {
+  try {
+    const res = await fetch(STAPLES_URL, {
+      next: { revalidate: 60 * 60 * 24, tags: ['ygo-top'] },
+    });
+    if (!res.ok) throw new Error(`YGOPRODeck responded ${res.status}`);
+    const json = (await res.json()) as { data?: Card[] };
+    return json.data ? buildStaples(json.data) : [];
+  } catch {
+    return [];
+  }
 }
