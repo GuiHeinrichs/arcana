@@ -27,6 +27,7 @@ export function HoloCard({
   animate = true,
   rank,
   metric,
+  price,
 }: {
   card: Card;
   index?: number;
@@ -34,6 +35,7 @@ export function HoloCard({
   animate?: boolean;
   rank?: number;
   metric?: string;
+  price?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const art = card.card_images[0];
@@ -76,7 +78,9 @@ export function HoloCard({
     >
       <span className="sr-only">
         View {card.name}
-        {rank !== undefined && `, Rank ${rank}${metric ? `, ${metric}` : ''}`}
+        {rank !== undefined && `, Rank ${rank}`}
+        {metric && `, ${metric}`}
+        {price && `, ${price}`}
       </span>
       <div
         ref={ref}
@@ -115,6 +119,14 @@ export function HoloCard({
             className="absolute right-2 top-2 rounded-[4px] bg-black/65 px-1.5 py-0.5 font-mono text-[0.56rem] uppercase tracking-[0.1em] text-ink/90 backdrop-blur-sm"
           >
             {metric}
+          </span>
+        )}
+        {price && (
+          <span
+            aria-hidden
+            className="absolute bottom-2 left-2 z-10 rounded-[4px] bg-black/70 px-1.5 py-0.5 font-mono text-[0.6rem] font-medium tracking-wide text-emerald-300 backdrop-blur-sm"
+          >
+            {price}
           </span>
         )}
 

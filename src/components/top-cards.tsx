@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { CardDetailSheet } from "@/components/card-detail-sheet";
 import { GRID, HoloCard } from "@/components/holo-card";
 import { Podium } from "@/components/podium";
+import { formatPrice } from "@/lib/card-price";
 import { formatCount, metricLabel, type RankedCard, type TopLens } from "@/lib/top-cards";
 import type { Card } from "@/lib/ygoprodeck";
 
@@ -95,6 +96,7 @@ export function TopCards({
                       onSelect={setSelected}
                       rank={rc.rank}
                       metric={`${formatCount(rc.metric)} ${metricLabel(active)}`}
+                      price={formatPrice(rc.card) ?? undefined}
                     />
                   </li>
                 ))}

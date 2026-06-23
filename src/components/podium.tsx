@@ -1,6 +1,7 @@
 "use client";
 
 import { HoloCard } from "@/components/holo-card";
+import { formatPrice } from "@/lib/card-price";
 import { formatCount, metricLabel, type RankedCard, type TopLens } from "@/lib/top-cards";
 import type { Card } from "@/lib/ygoprodeck";
 
@@ -39,6 +40,7 @@ export function Podium({
             onSelect={onSelect}
             rank={rc.rank}
             metric={`${formatCount(rc.metric)} ${metricLabel(lens)}`}
+            price={formatPrice(rc.card) ?? undefined}
           />
         </li>
       ))}

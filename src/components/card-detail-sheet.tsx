@@ -8,6 +8,7 @@ import {
   rankLabel,
   type Card,
 } from "@/lib/ygoprodeck";
+import { formatPrice } from "@/lib/card-price";
 import { AttributeChip, FrameChip } from "@/components/chips";
 import { CardInspector } from "@/components/card-inspector";
 import {
@@ -72,6 +73,7 @@ export function CardDetailSheet({
   const isMonster = card ? card.atk !== undefined : false;
   const attr = card ? attributeMeta(card.attribute) : null;
   const art = card?.card_images[0];
+  const price = card ? formatPrice(card) : null;
 
   return (
     <>
@@ -196,6 +198,17 @@ export function CardDetailSheet({
                 {card.desc}
               </p>
             </section>
+
+            {price && (
+              <div className="flex items-center justify-between gap-3 rounded-lg border border-hairline bg-surface/60 px-4 py-3">
+                <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-faint">
+                  Market price
+                </span>
+                <span className="font-display text-xl font-semibold text-emerald-300">
+                  {price}
+                </span>
+              </div>
+            )}
 
             {card.archetype && (
               <p className="font-mono text-xs uppercase tracking-wider text-faint">

@@ -71,7 +71,7 @@ describe('rankBy', () => {
 });
 
 describe('trimCard', () => {
-  test('keeps only the first image and drops misc_info and extra keys', () => {
+  test('keeps the first image + prices, drops misc_info and set bulk', () => {
     const raw = {
       ...card({ id: 7, misc_info: [{ views: 5 }] }),
       card_images: [
@@ -79,7 +79,7 @@ describe('trimCard', () => {
         { id: 8, image_url: 'b', image_url_small: 'b', image_url_cropped: 'b' },
       ],
       card_sets: [{ set_name: 'x' }],
-      card_prices: [{ cardmarket_price: '1' }],
+      card_prices: [{ tcgplayer_price: '1.00' }],
     } as unknown as Card;
 
     const trimmed = trimCard(raw);
@@ -87,7 +87,7 @@ describe('trimCard', () => {
     expect(trimmed.card_images[0].id).toBe(7);
     expect(trimmed.misc_info).toBeUndefined();
     expect('card_sets' in trimmed).toBe(false);
-    expect('card_prices' in trimmed).toBe(false);
+    expect(trimmed.card_prices).toEqual([{ tcgplayer_price: '1.00' }]);
     expect(trimmed.name).toBe('Card 7');
   });
 

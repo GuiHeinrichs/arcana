@@ -35,7 +35,8 @@ function metricOf(card: Card, metric: MetricKey): number {
 }
 
 /** Reduce a card to the fields HoloCard / CardDetailSheet / CardInspector read,
- *  keeping only the primary image and dropping misc_info and price/set bulk. */
+ *  keeping the primary image and market prices while dropping misc_info and the
+ *  set/printing bulk. */
 export function trimCard(card: Card): Card {
   return {
     id: card.id,
@@ -56,6 +57,7 @@ export function trimCard(card: Card): Card {
     linkmarkers: card.linkmarkers,
     scale: card.scale,
     card_images: card.card_images.length ? [card.card_images[0]] : [],
+    card_prices: card.card_prices,
   };
 }
 

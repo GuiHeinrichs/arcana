@@ -92,6 +92,14 @@ export interface MiscInfo {
   downvotes?: number;
 }
 
+export interface CardPrices {
+  cardmarket_price?: string;
+  tcgplayer_price?: string;
+  ebay_price?: string;
+  amazon_price?: string;
+  coolstuffinc_price?: string;
+}
+
 export interface Card {
   id: number;
   name: string;
@@ -111,6 +119,7 @@ export interface Card {
   linkmarkers?: string[];
   scale?: number;
   card_images: CardImage[];
+  card_prices?: CardPrices[];
   misc_info?: MiscInfo[];
 }
 
