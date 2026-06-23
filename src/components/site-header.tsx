@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArcanaMark } from "@/components/icons";
+import { HeaderNav } from "@/components/header-nav";
 
 export function SiteHeader() {
   return (
@@ -15,7 +16,7 @@ export function SiteHeader() {
             Arcana
           </span>
         </Link>
-        <span className="tech text-faint">Card Gallery · 所蔵</span>
+        <HeaderNav />
       </div>
     </header>
   );
