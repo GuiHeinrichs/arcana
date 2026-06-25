@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { formatCount, metricLabel, buildRankings, buildStaples, rankBy, trimCard } from '@/lib/top-cards';
+import { formatCount, metricLabel, buildArchetypes, buildRankings, buildStaples, rankBy, trimCard } from '@/lib/top-cards';
 import type { Card } from '@/lib/ygoprodeck';
 
 describe('formatCount', () => {
@@ -120,5 +120,28 @@ describe('buildStaples', () => {
     const staples = buildStaples(cards);
     expect(staples).toHaveLength(3);
     expect(staples.map((c) => c.card.id)).toEqual([2, 3, 1]);
+  });
+});
+
+describe('buildArchetypes', () => {
+  test('groups by archetype, ranks by summed views, picks hero art', () => {
+    const cards = [
+      card({ id: 1, archetype: 'Blue-Eyes', misc_info: [{ views: 100 }] }),
+      card({ id: 2, archetype: 'Blue-Eyes', misc_info: [{ views: 400 }] }),
+      card({ id: 3, archetype: 'Dark Magician', misc_info: [{ views: 200 }] }),
+      card({ id: 4 }), // no archetype -> ignored
+    ];
+    const arch = buildArchetypes(cards);
+    expect(arch.map((a) => a.name)).toEqual(['Blue-Eyes', 'Dark Magician']);
+    expect(arch[0]).toMatchObject({ name: 'Blue-Eyes', cardCount: 2, views: 500 });
+    expect(arch[0].art).toBe('https://img/c/2.jpg'); // most-viewed card's crop
+  });
+
+  test('respects the limit', () => {
+    const cards = [
+      card({ id: 1, archetype: 'A', misc_info: [{ views: 1 }] }),
+      card({ id: 2, archetype: 'B', misc_info: [{ views: 2 }] }),
+    ];
+    expect(buildArchetypes(cards, 1).map((a) => a.name)).toEqual(['B']);
   });
 });

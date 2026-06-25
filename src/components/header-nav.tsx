@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 const LINKS = [
   { href: "/", label: "Cards" },
   { href: "/top", label: "Top Cards" },
+  { href: "/archetypes", label: "Archetypes" },
   { href: "/builder", label: "Deck Builder" },
 ] as const;
 
@@ -14,7 +15,10 @@ export function HeaderNav() {
   return (
     <nav aria-label="Primary" className="flex items-center gap-1">
       {LINKS.map((link) => {
-        const isActive = link.href === pathname;
+        const isActive =
+          link.href === "/"
+            ? pathname === "/"
+            : pathname === link.href || pathname.startsWith(`${link.href}/`);
         return (
           <Link
             key={link.href}
